@@ -1,0 +1,1493 @@
+{
+  "api": {
+    "name": "FirebaseAuthenticationPlugin",
+    "slug": "firebaseauthenticationplugin",
+    "docs": "",
+    "tags": [],
+    "methods": [
+      {
+        "name": "applyActionCode",
+        "signature": "(options: ApplyActionCodeOptions) => Promise<void>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "ApplyActionCodeOptions"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.2.2"
+          }
+        ],
+        "docs": "Applies a verification code sent to the user by email.",
+        "complexTypes": [
+          "ApplyActionCodeOptions"
+        ],
+        "slug": "applyactioncode"
+      },
+      {
+        "name": "createUserWithEmailAndPassword",
+        "signature": "(options: CreateUserWithEmailAndPasswordOptions) => Promise<SignInResult>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "CreateUserWithEmailAndPasswordOptions"
+          }
+        ],
+        "returns": "Promise<SignInResult>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.2.2"
+          }
+        ],
+        "docs": "Creates a new user account with email and password.\nIf the new account was created, the user is signed in automatically.",
+        "complexTypes": [
+          "SignInResult",
+          "CreateUserWithEmailAndPasswordOptions"
+        ],
+        "slug": "createuserwithemailandpassword"
+      },
+      {
+        "name": "confirmPasswordReset",
+        "signature": "(options: ConfirmPasswordResetOptions) => Promise<void>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "ConfirmPasswordResetOptions"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.2.2"
+          }
+        ],
+        "docs": "Completes the password reset process.",
+        "complexTypes": [
+          "ConfirmPasswordResetOptions"
+        ],
+        "slug": "confirmpasswordreset"
+      },
+      {
+        "name": "getCurrentUser",
+        "signature": "() => Promise<GetCurrentUserResult>",
+        "parameters": [],
+        "returns": "Promise<GetCurrentUserResult>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.1.0"
+          }
+        ],
+        "docs": "Fetches the currently signed-in user.",
+        "complexTypes": [
+          "GetCurrentUserResult"
+        ],
+        "slug": "getcurrentuser"
+      },
+      {
+        "name": "getIdToken",
+        "signature": "(options?: GetIdTokenOptions | undefined) => Promise<GetIdTokenResult>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "GetIdTokenOptions | undefined"
+          }
+        ],
+        "returns": "Promise<GetIdTokenResult>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.1.0"
+          }
+        ],
+        "docs": "Fetches the Firebase Auth ID Token for the currently signed-in user.",
+        "complexTypes": [
+          "GetIdTokenResult",
+          "GetIdTokenOptions"
+        ],
+        "slug": "getidtoken"
+      },
+      {
+        "name": "sendEmailVerification",
+        "signature": "() => Promise<void>",
+        "parameters": [],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.2.2"
+          }
+        ],
+        "docs": "Sends a verification email to the currently signed in user.",
+        "complexTypes": [],
+        "slug": "sendemailverification"
+      },
+      {
+        "name": "sendPasswordResetEmail",
+        "signature": "(options: SendPasswordResetEmailOptions) => Promise<void>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "SendPasswordResetEmailOptions"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.2.2"
+          }
+        ],
+        "docs": "Sends a password reset email.",
+        "complexTypes": [
+          "SendPasswordResetEmailOptions"
+        ],
+        "slug": "sendpasswordresetemail"
+      },
+      {
+        "name": "setLanguageCode",
+        "signature": "(options: SetLanguageCodeOptions) => Promise<void>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "SetLanguageCodeOptions"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.1.0"
+          }
+        ],
+        "docs": "Sets the user-facing language code for auth operations.",
+        "complexTypes": [
+          "SetLanguageCodeOptions"
+        ],
+        "slug": "setlanguagecode"
+      },
+      {
+        "name": "signInWithApple",
+        "signature": "(options?: SignInOptions | undefined) => Promise<SignInResult>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "SignInOptions | undefined"
+          }
+        ],
+        "returns": "Promise<SignInResult>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.1.0"
+          }
+        ],
+        "docs": "Starts the Apple sign-in flow.",
+        "complexTypes": [
+          "SignInResult",
+          "SignInOptions"
+        ],
+        "slug": "signinwithapple"
+      },
+      {
+        "name": "signInWithCustomToken",
+        "signature": "(options: SignInWithCustomTokenOptions) => Promise<SignInResult>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "SignInWithCustomTokenOptions"
+          }
+        ],
+        "returns": "Promise<SignInResult>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.1.0"
+          }
+        ],
+        "docs": "Starts the Custom Token sign-in flow.\n\nThis method cannot be used in combination with `skipNativeAuth` on Android and iOS.\nIn this case you have to use the `signInWithCustomToken` interface of the Firebase JS SDK directly.",
+        "complexTypes": [
+          "SignInResult",
+          "SignInWithCustomTokenOptions"
+        ],
+        "slug": "signinwithcustomtoken"
+      },
+      {
+        "name": "signInWithEmailAndPassword",
+        "signature": "(options: SignInWithEmailAndPasswordOptions) => Promise<SignInResult>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "SignInWithEmailAndPasswordOptions"
+          }
+        ],
+        "returns": "Promise<SignInResult>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.2.2"
+          }
+        ],
+        "docs": "Starts the sign-in flow using an email and password.",
+        "complexTypes": [
+          "SignInResult",
+          "SignInWithEmailAndPasswordOptions"
+        ],
+        "slug": "signinwithemailandpassword"
+      },
+      {
+        "name": "signInWithFacebook",
+        "signature": "(options?: SignInOptions | undefined) => Promise<SignInResult>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "SignInOptions | undefined"
+          }
+        ],
+        "returns": "Promise<SignInResult>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.1.0"
+          }
+        ],
+        "docs": "Starts the Facebook sign-in flow.",
+        "complexTypes": [
+          "SignInResult",
+          "SignInOptions"
+        ],
+        "slug": "signinwithfacebook"
+      },
+      {
+        "name": "signInWithGithub",
+        "signature": "(options?: SignInOptions | undefined) => Promise<SignInResult>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "SignInOptions | undefined"
+          }
+        ],
+        "returns": "Promise<SignInResult>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.1.0"
+          }
+        ],
+        "docs": "Starts the GitHub sign-in flow.",
+        "complexTypes": [
+          "SignInResult",
+          "SignInOptions"
+        ],
+        "slug": "signinwithgithub"
+      },
+      {
+        "name": "signInWithGoogle",
+        "signature": "(options?: SignInOptions | undefined) => Promise<SignInResult>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "SignInOptions | undefined"
+          }
+        ],
+        "returns": "Promise<SignInResult>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.1.0"
+          }
+        ],
+        "docs": "Starts the Google sign-in flow.",
+        "complexTypes": [
+          "SignInResult",
+          "SignInOptions"
+        ],
+        "slug": "signinwithgoogle"
+      },
+      {
+        "name": "signInWithMicrosoft",
+        "signature": "(options?: SignInOptions | undefined) => Promise<SignInResult>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "SignInOptions | undefined"
+          }
+        ],
+        "returns": "Promise<SignInResult>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.1.0"
+          }
+        ],
+        "docs": "Starts the Microsoft sign-in flow.",
+        "complexTypes": [
+          "SignInResult",
+          "SignInOptions"
+        ],
+        "slug": "signinwithmicrosoft"
+      },
+      {
+        "name": "signInWithPhoneNumber",
+        "signature": "(options: SignInWithPhoneNumberOptions) => Promise<SignInWithPhoneNumberResult>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "SignInWithPhoneNumberOptions"
+          }
+        ],
+        "returns": "Promise<SignInWithPhoneNumberResult>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.1.0"
+          }
+        ],
+        "docs": "Starts the sign-in flow using a phone number.\n\nEither the phone number or the verification code and verification ID must be provided.\n\nOnly available for Android and iOS.",
+        "complexTypes": [
+          "SignInWithPhoneNumberResult",
+          "SignInWithPhoneNumberOptions"
+        ],
+        "slug": "signinwithphonenumber"
+      },
+      {
+        "name": "signInWithPlayGames",
+        "signature": "(options?: SignInOptions | undefined) => Promise<SignInResult>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "SignInOptions | undefined"
+          }
+        ],
+        "returns": "Promise<SignInResult>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.1.0"
+          }
+        ],
+        "docs": "Starts the Play Games sign-in flow.",
+        "complexTypes": [
+          "SignInResult",
+          "SignInOptions"
+        ],
+        "slug": "signinwithplaygames"
+      },
+      {
+        "name": "signInWithTwitter",
+        "signature": "(options?: SignInOptions | undefined) => Promise<SignInResult>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "SignInOptions | undefined"
+          }
+        ],
+        "returns": "Promise<SignInResult>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.1.0"
+          }
+        ],
+        "docs": "Starts the Twitter sign-in flow.",
+        "complexTypes": [
+          "SignInResult",
+          "SignInOptions"
+        ],
+        "slug": "signinwithtwitter"
+      },
+      {
+        "name": "signInWithYahoo",
+        "signature": "(options?: SignInOptions | undefined) => Promise<SignInResult>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "SignInOptions | undefined"
+          }
+        ],
+        "returns": "Promise<SignInResult>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.1.0"
+          }
+        ],
+        "docs": "Starts the Yahoo sign-in flow.",
+        "complexTypes": [
+          "SignInResult",
+          "SignInOptions"
+        ],
+        "slug": "signinwithyahoo"
+      },
+      {
+        "name": "signOut",
+        "signature": "() => Promise<void>",
+        "parameters": [],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.1.0"
+          }
+        ],
+        "docs": "Starts the sign-out flow.",
+        "complexTypes": [],
+        "slug": "signout"
+      },
+      {
+        "name": "updateEmail",
+        "signature": "(options: UpdateEmailOptions) => Promise<void>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "UpdateEmailOptions"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.1.0"
+          }
+        ],
+        "docs": "Updates the email address of the currently signed in user.",
+        "complexTypes": [
+          "UpdateEmailOptions"
+        ],
+        "slug": "updateemail"
+      },
+      {
+        "name": "updatePassword",
+        "signature": "(options: UpdatePasswordOptions) => Promise<void>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "UpdatePasswordOptions"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.1.0"
+          }
+        ],
+        "docs": "Updates the password of the currently signed in user.",
+        "complexTypes": [
+          "UpdatePasswordOptions"
+        ],
+        "slug": "updatepassword"
+      },
+      {
+        "name": "useAppLanguage",
+        "signature": "() => Promise<void>",
+        "parameters": [],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.1.0"
+          }
+        ],
+        "docs": "Sets the user-facing language code to be the default app language.",
+        "complexTypes": [],
+        "slug": "useapplanguage"
+      },
+      {
+        "name": "useEmulator",
+        "signature": "(options: UseEmulatorOptions) => Promise<void>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "UseEmulatorOptions"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.2.0"
+          }
+        ],
+        "docs": "Instrument your app to talk to the Authentication emulator.",
+        "complexTypes": [
+          "UseEmulatorOptions"
+        ],
+        "slug": "useemulator"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: 'authStateChange', listenerFunc: AuthStateChangeListener) => Promise<PluginListenerHandle> & PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "'authStateChange'"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "AuthStateChangeListener"
+          }
+        ],
+        "returns": "Promise<PluginListenerHandle> & PluginListenerHandle",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.1.0"
+          }
+        ],
+        "docs": "Listen for the user's sign-in state changes.",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "AuthStateChangeListener"
+        ],
+        "slug": "addlistenerauthstatechange"
+      },
+      {
+        "name": "removeAllListeners",
+        "signature": "() => Promise<void>",
+        "parameters": [],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.1.0"
+          }
+        ],
+        "docs": "Remove all listeners for this plugin.",
+        "complexTypes": [],
+        "slug": "removealllisteners"
+      }
+    ],
+    "properties": []
+  },
+  "interfaces": [
+    {
+      "name": "ApplyActionCodeOptions",
+      "slug": "applyactioncodeoptions",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.2.2",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "oobCode",
+          "tags": [
+            {
+              "text": "0.2.2",
+              "name": "since"
+            }
+          ],
+          "docs": "A verification code sent to the user.",
+          "complexTypes": [],
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "SignInResult",
+      "slug": "signinresult",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.1.0",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "user",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "The currently signed-in user, or null if there isn't any.",
+          "complexTypes": [
+            "User"
+          ],
+          "type": "User | null"
+        },
+        {
+          "name": "credential",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "Credentials returned by an auth provider.",
+          "complexTypes": [
+            "AuthCredential"
+          ],
+          "type": "AuthCredential | null"
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "slug": "user",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.1.0",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "displayName",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string | null"
+        },
+        {
+          "name": "email",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string | null"
+        },
+        {
+          "name": "emailVerified",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "boolean"
+        },
+        {
+          "name": "isAnonymous",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "boolean"
+        },
+        {
+          "name": "phoneNumber",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string | null"
+        },
+        {
+          "name": "photoUrl",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string | null"
+        },
+        {
+          "name": "providerId",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string"
+        },
+        {
+          "name": "tenantId",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string | null"
+        },
+        {
+          "name": "uid",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "AuthCredential",
+      "slug": "authcredential",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.1.0",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "providerId",
+          "tags": [
+            {
+              "text": "\"google.com\"",
+              "name": "example"
+            },
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "The authentication provider ID for the credential.",
+          "complexTypes": [],
+          "type": "string"
+        },
+        {
+          "name": "accessToken",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "The OAuth access token associated with the credential if it belongs to an OAuth provider.",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "idToken",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "The OAuth ID token associated with the credential if it belongs to an OIDC provider.",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "secret",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "The OAuth access token secret associated with the credential if it belongs to an OAuth 1.0 provider.",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "nonce",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "The random string used to make sure that the ID token you get was granted specifically in response to your app's authentication request.",
+          "complexTypes": [],
+          "type": "string | undefined"
+        }
+      ]
+    },
+    {
+      "name": "CreateUserWithEmailAndPasswordOptions",
+      "slug": "createuserwithemailandpasswordoptions",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.2.2",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "email",
+          "tags": [
+            {
+              "text": "0.2.2",
+              "name": "since"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string"
+        },
+        {
+          "name": "password",
+          "tags": [
+            {
+              "text": "0.2.2",
+              "name": "since"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "ConfirmPasswordResetOptions",
+      "slug": "confirmpasswordresetoptions",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.2.2",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "oobCode",
+          "tags": [
+            {
+              "text": "0.2.2",
+              "name": "since"
+            }
+          ],
+          "docs": "A verification code sent to the user.",
+          "complexTypes": [],
+          "type": "string"
+        },
+        {
+          "name": "newPassword",
+          "tags": [
+            {
+              "text": "0.2.2",
+              "name": "since"
+            }
+          ],
+          "docs": "The new password.",
+          "complexTypes": [],
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "GetCurrentUserResult",
+      "slug": "getcurrentuserresult",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.1.0",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "user",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "The currently signed-in user, or null if there isn't any.",
+          "complexTypes": [
+            "User"
+          ],
+          "type": "User | null"
+        }
+      ]
+    },
+    {
+      "name": "GetIdTokenResult",
+      "slug": "getidtokenresult",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.1.0",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "token",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "The Firebase Auth ID token JWT string.",
+          "complexTypes": [],
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "GetIdTokenOptions",
+      "slug": "getidtokenoptions",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.1.0",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "forceRefresh",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "Force refresh regardless of token expiration.",
+          "complexTypes": [],
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "SendPasswordResetEmailOptions",
+      "slug": "sendpasswordresetemailoptions",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.2.2",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "email",
+          "tags": [
+            {
+              "text": "0.2.2",
+              "name": "since"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "SetLanguageCodeOptions",
+      "slug": "setlanguagecodeoptions",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.1.0",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "languageCode",
+          "tags": [
+            {
+              "text": "\"en-US\"",
+              "name": "example"
+            },
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "BCP 47 language code.",
+          "complexTypes": [],
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "SignInOptions",
+      "slug": "signinoptions",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.1.0",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "customParameters",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "Configures custom parameters to be passed to the identity provider during the OAuth sign-in flow.",
+          "complexTypes": [
+            "SignInCustomParameter"
+          ],
+          "type": "SignInCustomParameter[] | undefined"
+        },
+        {
+          "name": "scopes",
+          "tags": [
+            {
+              "text": "0.3.1",
+              "name": "since"
+            }
+          ],
+          "docs": "Scopes to request from provider.",
+          "complexTypes": [],
+          "type": "string[] | undefined"
+        }
+      ]
+    },
+    {
+      "name": "SignInCustomParameter",
+      "slug": "signincustomparameter",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.1.0",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "key",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "The custom parameter key (e.g. `login_hint`).",
+          "complexTypes": [],
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "The custom parameter value (e.g. `user@firstadd.onmicrosoft.com`).",
+          "complexTypes": [],
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "SignInWithCustomTokenOptions",
+      "slug": "signinwithcustomtokenoptions",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.1.0",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "token",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "The custom token to sign in with.",
+          "complexTypes": [],
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "SignInWithEmailAndPasswordOptions",
+      "slug": "signinwithemailandpasswordoptions",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.2.2",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "email",
+          "tags": [
+            {
+              "text": "0.2.2",
+              "name": "since"
+            }
+          ],
+          "docs": "The users email address.",
+          "complexTypes": [],
+          "type": "string"
+        },
+        {
+          "name": "password",
+          "tags": [
+            {
+              "text": "0.2.2",
+              "name": "since"
+            }
+          ],
+          "docs": "The users password.",
+          "complexTypes": [],
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "SignInWithPhoneNumberResult",
+      "slug": "signinwithphonenumberresult",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.1.0",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "verificationId",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "The verification ID, which is needed to identify the verification code.",
+          "complexTypes": [],
+          "type": "string | undefined"
+        }
+      ]
+    },
+    {
+      "name": "SignInWithPhoneNumberOptions",
+      "slug": "signinwithphonenumberoptions",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.1.0",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "phoneNumber",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "The phone number to be verified.",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "verificationId",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "The verification ID which will be returned when `signInWithPhoneNumber` is called for the first time.\nThe `verificationCode` must also be provided.",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "verificationCode",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "The verification code from the SMS message.\nThe `verificationId` must also be provided.",
+          "complexTypes": [],
+          "type": "string | undefined"
+        }
+      ]
+    },
+    {
+      "name": "UpdateEmailOptions",
+      "slug": "updateemailoptions",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.2.2",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "newEmail",
+          "tags": [
+            {
+              "text": "0.2.2",
+              "name": "since"
+            }
+          ],
+          "docs": "The new email address.",
+          "complexTypes": [],
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "UpdatePasswordOptions",
+      "slug": "updatepasswordoptions",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.2.2",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "newPassword",
+          "tags": [
+            {
+              "text": "0.2.2",
+              "name": "since"
+            }
+          ],
+          "docs": "The new password.",
+          "complexTypes": [],
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "UseEmulatorOptions",
+      "slug": "useemulatoroptions",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.2.0",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "host",
+          "tags": [
+            {
+              "text": "0.2.0",
+              "name": "since"
+            }
+          ],
+          "docs": "The emulator host (e.g. `10.0.2.2`).",
+          "complexTypes": [],
+          "type": "string"
+        },
+        {
+          "name": "port",
+          "tags": [
+            {
+              "text": "9099",
+              "name": "default"
+            },
+            {
+              "text": "0.2.0",
+              "name": "since"
+            }
+          ],
+          "docs": "The emulator port (e.g. `9099`).",
+          "complexTypes": [],
+          "type": "number | undefined"
+        }
+      ]
+    },
+    {
+      "name": "PluginListenerHandle",
+      "slug": "pluginlistenerhandle",
+      "docs": "",
+      "tags": [],
+      "methods": [],
+      "properties": [
+        {
+          "name": "remove",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "() => Promise<void>"
+        }
+      ]
+    },
+    {
+      "name": "AuthStateChange",
+      "slug": "authstatechange",
+      "docs": "",
+      "tags": [
+        {
+          "text": "0.1.0",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "user",
+          "tags": [
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "The currently signed-in user, or null if there isn't any.",
+          "complexTypes": [
+            "User"
+          ],
+          "type": "User | null"
+        }
+      ]
+    }
+  ],
+  "enums": [],
+  "typeAliases": [
+    {
+      "name": "AuthStateChangeListener",
+      "slug": "authstatechangelistener",
+      "docs": "Callback to receive the user's sign-in state change notifications.",
+      "types": [
+        {
+          "text": "(change: AuthStateChange): void",
+          "complexTypes": [
+            "AuthStateChange"
+          ]
+        }
+      ]
+    }
+  ],
+  "pluginConfigs": [
+    {
+      "name": "FirebaseAuthentication",
+      "slug": "firebaseauthentication",
+      "properties": [
+        {
+          "name": "skipNativeAuth",
+          "tags": [
+            {
+              "text": "false",
+              "name": "default"
+            },
+            {
+              "text": "false",
+              "name": "example"
+            },
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "Configure whether the plugin should skip the native authentication.\nOnly needed if you want to use the Firebase JavaScript SDK.\n\nOnly available for Android and iOS.",
+          "complexTypes": [],
+          "type": "boolean | undefined"
+        },
+        {
+          "name": "providers",
+          "tags": [
+            {
+              "text": "[\"apple.com\", \"facebook.com\", \"github.com\", \"google.com\", \"microsoft.com\", \"playgames.google.com\", \"twitter.com\", \"yahoo.com\", \"phone\"]",
+              "name": "default"
+            },
+            {
+              "text": "[\"apple.com\", \"google.com\"]",
+              "name": "example"
+            },
+            {
+              "text": "0.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "Configure which providers you want to use so that only the providers you need are fully initialized.\nIf you do not configure any providers, they will be all initialized.\nPlease note that this does not prevent the automatic initialization of third-party SDKs.\n\nOnly available for Android and iOS.",
+          "complexTypes": [],
+          "type": "string[] | undefined"
+        }
+      ],
+      "docs": "These configuration values are available:"
+    }
+  ]
+}
