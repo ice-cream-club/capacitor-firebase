@@ -52,7 +52,7 @@ class TwitterAuthProviderHandler: NSObject {
                         return
                     }
 
-                    self.pluginImplementation.handleSuccessfulSignIn(credential: authResult?.credential, user: Auth.auth().currentUser, idToken: nil, nonce: nil, accessToken: nil)
+                    self.pluginImplementation.handleSuccessfulSignIn(credential: (authResult?.credential)!, idToken: nil, nonce: nil, accessToken: nil)
                 }
 
             }
