@@ -14,6 +14,7 @@ public typealias AuthStateChangedObserver = () -> Void
     private var gameCenterAuthProviderHandler: GameCenterAuthProviderHandler?
     private var facebookAuthProviderHandler: FacebookAuthProviderHandler?
     private var googleAuthProviderHandler: GoogleAuthProviderHandler?
+    private var twitterAuthProviderHandler: TwitterAuthProviderHandler?
     private var oAuthProviderHandler: OAuthProviderHandler?
     private var phoneAuthProviderHandler: PhoneAuthProviderHandler?
     private var savedCall: CAPPluginCall?
@@ -380,7 +381,7 @@ public typealias AuthStateChangedObserver = () -> Void
 
     @objc func signInWithTwitter(_ call: CAPPluginCall) {
         self.savedCall = call
-        self.oAuthProviderHandler?.signIn(call: call, providerId: ProviderId.twitter)
+        self.twitterAuthProviderHandler?.signIn(call: call)
     }
 
     @objc func signInWithYahoo(_ call: CAPPluginCall) {
@@ -539,6 +540,9 @@ public typealias AuthStateChangedObserver = () -> Void
         }
         if config.providers.contains(ProviderId.google) {
             self.googleAuthProviderHandler = GoogleAuthProviderHandler(self)
+        }
+        if config.providers.contains("twitter.com") {
+            self.twitterAuthProviderHandler = TwitterAuthProviderHandler(self)
         }
         if config.providers.contains(ProviderId.phone) {
             self.phoneAuthProviderHandler = PhoneAuthProviderHandler(self)
