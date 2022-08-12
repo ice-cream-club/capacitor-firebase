@@ -90,6 +90,10 @@ public typealias AuthStateChangedObserver = () -> Void
         })
     }
 
+    @objc func isSignInWithEmailLink(link: String) -> Bool {
+        return Auth.auth().isSignIn(withEmailLink: link)
+    }
+
     @objc func sendEmailVerification(user: User, completion: @escaping (Error?) -> Void) {
         user.sendEmailVerification(completion: { error in
             completion(error)
@@ -98,6 +102,12 @@ public typealias AuthStateChangedObserver = () -> Void
 
     @objc func sendPasswordResetEmail(email: String, completion: @escaping (Error?) -> Void) {
         return Auth.auth().sendPasswordReset(withEmail: email) { error in
+            completion(error)
+        }
+    }
+
+    @objc func sendSignInLinkToEmail(email: String, actionCodeSettings: ActionCodeSettings, completion: @escaping (Error?) -> Void) {
+        return Auth.auth().sendSignInLink(toEmail: email, actionCodeSettings: actionCodeSettings) { error in
             completion(error)
         }
     }
@@ -154,6 +164,25 @@ public typealias AuthStateChangedObserver = () -> Void
             }
             let user = self.getCurrentUser()
             let result = FirebaseAuthenticationHelper.createSignInResult(credential: nil, user: user, idToken: nil, nonce: nil, accessToken: nil, additionalUserInfo: nil)
+            savedCall.resolve(result)
+        }
+    }
+
+    @objc func signInWithEmailLink(_ call: CAPPluginCall) {
+        let email = call.getString("email", "")
+        let emailLink = call.getString("emailLink", "")
+
+        self.savedCall = call
+        Auth.auth().signIn(withEmail: email, link: emailLink) { authResult, error in
+            if let error = error {
+                self.handleFailedSignIn(message: nil, error: error)
+                return
+            }
+            guard let savedCall = self.savedCall else {
+                return
+            }
+            let result = FirebaseAuthenticationHelper.createSignInResult(credential: authResult?.credential, user: authResult?.user, idToken: nil, nonce: nil, accessToken: nil,
+                                                                         additionalUserInfo: authResult?.additionalUserInfo)
             savedCall.resolve(result)
         }
     }
@@ -241,8 +270,8 @@ public typealias AuthStateChangedObserver = () -> Void
             guard let savedCall = self.savedCall else {
                 return
             }
-            let result = FirebaseAuthenticationHelper.createSignInResult(credential: authResult?.credential, user: authResult?.user, idToken: idToken,
-                                                                         nonce: nonce, accessToken: accessToken, additionalUserInfo: authResult?.additionalUserInfo)
+            let result = FirebaseAuthenticationHelper.createSignInResult(credential: authResult?.credential, user: authResult?.user, idToken: idToken, nonce: nonce, accessToken: accessToken,
+                                                                         additionalUserInfo: authResult?.additionalUserInfo)
             savedCall.resolve(result)
         }
     }
