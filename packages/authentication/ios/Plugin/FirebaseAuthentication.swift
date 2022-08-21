@@ -90,6 +90,10 @@ public typealias AuthStateChangedObserver = () -> Void
         })
     }
 
+    @objc func getTenantId() -> String? {
+        return Auth.auth().tenantID
+    }
+
     @objc func isSignInWithEmailLink(link: String) -> Bool {
         return Auth.auth().isSignIn(withEmailLink: link)
     }
@@ -114,6 +118,10 @@ public typealias AuthStateChangedObserver = () -> Void
 
     @objc func setLanguageCode(_ languageCode: String) {
         Auth.auth().languageCode = languageCode
+    }
+
+    @objc func setTenantId(tenantId: String) {
+        Auth.auth().tenantID = tenantId
     }
 
     @objc func signInWithApple(_ call: CAPPluginCall) {
