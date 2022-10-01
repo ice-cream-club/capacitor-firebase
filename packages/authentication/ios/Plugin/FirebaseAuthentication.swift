@@ -402,17 +402,17 @@ public typealias AuthStateChangedObserver = () -> Void
     }
 
     func handleSuccessfulSignIn(credential: AuthCredential, idToken: String?, nonce: String?, accessToken: String?) {
-        self.handleSuccessfulSignIn(credential: credential, idToken: idToken, nonce: nonce, accessToken: accessToken, displayName: nil)
+        self.handleSuccessfulSignIn(credential: credential, idToken: idToken, nonce: nonce, accessToken: accessToken, displayName: nil, authorizationCode: nil)
     }
 
-    func handleSuccessfulSignIn(credential: AuthCredential, idToken: String?, nonce: String?, accessToken: String?, displayName: String?) {
+    func handleSuccessfulSignIn(credential: AuthCredential, idToken: String?, nonce: String?, accessToken: String?, displayName: String?, authorizationCode: String?) {
         guard let savedCall = self.savedCall else {
             return
         }
         let skipNativeAuth = savedCall.getBool("skipNativeAuth", config.skipNativeAuth)
         if skipNativeAuth == true {
             let result = FirebaseAuthenticationHelper.createSignInResult(credential: credential, user: nil, idToken: idToken, nonce: nonce,
-                                                                         accessToken: accessToken, additionalUserInfo: nil, displayName: displayName)
+                                                                         accessToken: accessToken, additionalUserInfo: nil, displayName: displayName, authorizationCode: authorizationCode)
             savedCall.resolve(result)
             return
         }
@@ -425,7 +425,7 @@ public typealias AuthStateChangedObserver = () -> Void
                 return
             }
             let result = FirebaseAuthenticationHelper.createSignInResult(credential: authResult?.credential, user: authResult?.user, idToken: idToken, nonce: nonce, accessToken: accessToken,
-                                                                         additionalUserInfo: authResult?.additionalUserInfo, displayName: displayName)
+                                                                         additionalUserInfo: authResult?.additionalUserInfo, displayName: displayName, authorizationCode: authorizationCode)
             savedCall.resolve(result)
         }
     }
@@ -439,10 +439,10 @@ public typealias AuthStateChangedObserver = () -> Void
     }
 
     func handleSuccessfulLink(credential: AuthCredential, idToken: String?, nonce: String?, accessToken: String?) {
-        self.handleSuccessfulLink(credential: credential, idToken: idToken, nonce: nonce, accessToken: accessToken, displayName: nil)
+        self.handleSuccessfulLink(credential: credential, idToken: idToken, nonce: nonce, accessToken: accessToken, displayName: nil, authorizationCode: nil)
     }
 
-    func handleSuccessfulLink(credential: AuthCredential, idToken: String?, nonce: String?, accessToken: String?, displayName: String?) {
+    func handleSuccessfulLink(credential: AuthCredential, idToken: String?, nonce: String?, accessToken: String?, displayName: String?, authorizationCode: String?) {
         guard let user = getCurrentUser() else {
             self.handleFailedLink(message: plugin.errorNoUserSignedIn, error: nil)
             return
@@ -456,7 +456,7 @@ public typealias AuthStateChangedObserver = () -> Void
                 return
             }
             let result = FirebaseAuthenticationHelper.createSignInResult(credential: authResult?.credential, user: authResult?.user, idToken: idToken, nonce: nonce, accessToken: accessToken,
-                                                                         additionalUserInfo: authResult?.additionalUserInfo, displayName: displayName)
+                                                                         additionalUserInfo: authResult?.additionalUserInfo, displayName: displayName, authorizationCode: authorizationCode)
             savedCall.resolve(result)
         }
     }
