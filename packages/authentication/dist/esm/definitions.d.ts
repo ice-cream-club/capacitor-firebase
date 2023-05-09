@@ -50,6 +50,14 @@ export interface FirebaseAuthenticationPlugin {
      */
     confirmPasswordReset(options: ConfirmPasswordResetOptions): Promise<void>;
     /**
+     * Finishes the phone number verification process.
+     *
+     * Only available for Android and iOS.
+     *
+     * @since 5.0.0
+     */
+    confirmVerificationCode(options: ConfirmVerificationCodeOptions): Promise<SignInResult>;
+    /**
      * Creates a new user account with email and password.
      * If the new account was created, the user is signed in automatically.
      *
@@ -177,9 +185,13 @@ export interface FirebaseAuthenticationPlugin {
      * The user must be logged in on the native layer.
      * The `skipNativeAuth` configuration option has no effect here.
      *
+     * Use the `phoneVerificationCompleted` listener to be notified when the verification is completed.
+     * Use the `phoneVerificationFailed` listener to be notified when the verification is failed.
+     * Use the `phoneCodeSent` listener to get the verification id.
+     *
      * @since 1.1.0
      */
-    linkWithPhoneNumber(options: LinkWithPhoneNumberOptions): Promise<LinkResult>;
+    linkWithPhoneNumber(options: LinkWithPhoneNumberOptions): Promise<void>;
     /**
      * Links the user account with Play Games authentication provider.
      *
@@ -315,13 +327,15 @@ export interface FirebaseAuthenticationPlugin {
     /**
      * Starts the sign-in flow using a phone number.
      *
-     * Either the phone number or the verification code and verification ID must be provided.
+     * Use the `phoneVerificationCompleted` listener to be notified when the verification is completed.
+     * Use the `phoneVerificationFailed` listener to be notified when the verification is failed.
+     * Use the `phoneCodeSent` listener to get the verification id.
      *
      * Only available for Android and iOS.
      *
      * @since 0.1.0
      */
-    signInWithPhoneNumber(options: SignInWithPhoneNumberOptions): Promise<SignInWithPhoneNumberResult>;
+    signInWithPhoneNumber(options: SignInWithPhoneNumberOptions): Promise<void>;
     /**
      * Starts the Play Games sign-in flow.
      *
@@ -451,6 +465,27 @@ export interface ConfirmPasswordResetOptions {
      * @since 0.2.2
      */
     newPassword: string;
+}
+/**
+ * @since 5.0.0
+ */
+export interface ConfirmVerificationCodeOptions {
+    /**
+     * The verification ID received from the `phoneCodeSent` listener.
+     *
+     * The `verificationCode` option must also be provided.
+     *
+     * @since 5.0.0
+     */
+    verificationId: string;
+    /**
+     * The verification code either received from the `phoneCodeSent` listener or entered by the user.
+     *
+     * The `verificationId` option must also be provided.
+     *
+     * @since 5.0.0
+     */
+    verificationCode: string;
 }
 /**
  * @since 0.2.2
@@ -628,12 +663,22 @@ export interface LinkWithEmailLinkOptions {
  */
 export interface LinkWithPhoneNumberOptions {
     /**
-     * The user's phone number in E.164 format.
+     * The phone number to be verified in E.164 format.
      *
      * @example "+16505550101"
      * @since 1.1.0
      */
     phoneNumber: string;
+    /**
+     * Resend the verification code to the specified phone number.
+     * `linkWithPhoneNumber` must be called once before using this option.
+     *
+     * Only available for Android.
+     *
+     * @since 5.0.0
+     * @default false
+     */
+    resendCode?: boolean;
 }
 /**
  * @since 1.1.0
@@ -647,20 +692,6 @@ export declare type LinkResult = SignInResult;
  * @since 0.1.0
  */
 export interface SignInOptions {
-    /**
-     * Configures custom parameters to be passed to the identity provider during the OAuth sign-in flow.
-     *
-     * @since 0.1.0
-     * @deprecated Use `SignInWithOAuthOptions` interface instead.
-     */
-    customParameters?: SignInCustomParameter[];
-    /**
-     * Scopes to request from provider.
-     *
-     * @since 0.3.1
-     * @deprecated Use `SignInWithOAuthOptions` interface instead.
-     */
-    scopes?: string[];
     /**
      * Whether the plugin should skip the native authentication or not.
      * Only needed if you want to use the Firebase JavaScript SDK.
@@ -732,22 +763,15 @@ export interface SignInCustomParameter {
  */
 export interface SignInWithPhoneNumberOptions extends SignInOptions {
     /**
-     * The phone number to be verified.
+     * The phone number to be verified in E.164 format.
      *
-     * Cannot be used in combination with `verificationId` and `verificationCode`.
-     *
-     * Use the `phoneVerificationCompleted` listener to be notified when the verification is completed.
-     * Use the `phoneVerificationFailed` listener to be notified when the verification is failed.
-     * Use the `phoneCodeSent` listener to get the verification id.
-     *
+     * @example "+16505550101"
      * @since 0.1.0
      */
-    phoneNumber?: string;
+    phoneNumber: string;
     /**
      * Resend the verification code to the specified phone number.
      * `signInWithPhoneNumber` must be called once before using this option.
-     *
-     * The `phoneNumber` option must also be provided.
      *
      * Only available for Android.
      *
@@ -755,22 +779,6 @@ export interface SignInWithPhoneNumberOptions extends SignInOptions {
      * @default false
      */
     resendCode?: boolean;
-    /**
-     * The verification ID received from the `phoneCodeSent` listener.
-     *
-     * The `verificationCode` option must also be provided.
-     *
-     * @since 0.1.0
-     */
-    verificationId?: string;
-    /**
-     * The verification code either received from the `phoneCodeSent` listener or entered by the user.
-     *
-     * The `verificationId` option must also be provided.
-     *
-     * @since 0.1.0
-     */
-    verificationCode?: string;
 }
 /**
  * @since 0.2.2
@@ -920,18 +928,6 @@ export interface UseEmulatorOptions {
 /**
  * @since 0.1.0
  */
-export interface SignInWithPhoneNumberResult extends SignInResult {
-    /**
-     * The verification ID, which is needed to identify the verification code.
-     *
-     * @since 0.1.0
-     * @deprecated Use `addListener('phoneCodeSent', ...)` instead.
-     */
-    verificationId?: string;
-}
-/**
- * @since 0.1.0
- */
 export interface User {
     /**
      * @since 0.1.0
@@ -1067,40 +1063,54 @@ export interface AuthStateChange {
  *
  * @since 1.3.0
  */
-export declare type PhoneVerificationCompletedListener = (event: {
+export declare type PhoneVerificationCompletedListener = (event: PhoneVerificationCompletedEvent) => void;
+/**
+ * @since 5.0.0
+ */
+export interface PhoneVerificationCompletedEvent extends SignInResult {
     /**
      * The verification code sent to the user's phone number.
      *
-     * @since 1.3.0
+     * If instant verification is used, this property is not set.
+     *
+     * @since 5.0.0
      */
-    verificationCode: string;
-}) => void;
+    verificationCode?: string;
+}
 /**
  * Callback to receive notifications of failed phone verification.
  *
  * @since 1.3.0
  */
-export declare type PhoneVerificationFailedListener = (event: {
+export declare type PhoneVerificationFailedListener = (event: PhoneVerificationFailedEvent) => void;
+/**
+ * @since 5.0.0
+ */
+export interface PhoneVerificationFailedEvent {
     /**
      * The error message.
      *
      * @since 1.3.0
      */
     message: string;
-}) => void;
+}
 /**
  * Callback to receive the verification ID.
  *
  * @since 1.3.0
  */
-export declare type PhoneCodeSentListener = (event: {
+export declare type PhoneCodeSentListener = (event: PhoneCodeSentEvent) => void;
+/**
+ * @since 5.0.0
+ */
+export interface PhoneCodeSentEvent {
     /**
      * The verification ID, which is needed to identify the verification code.
      *
      * @since 1.3.0
      */
     verificationId: string;
-}) => void;
+}
 /**
  * An interface that defines the required continue/state URL with optional Android and iOS
  * bundle identifiers.

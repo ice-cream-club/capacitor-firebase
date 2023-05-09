@@ -20,6 +20,9 @@ export class FirebaseAuthenticationWeb extends WebPlugin {
         const auth = getAuth();
         return confirmPasswordReset(auth, options.oobCode, options.newPassword);
     }
+    async confirmVerificationCode(_options) {
+        throw new Error('Not implemented on web.');
+    }
     async deleteUser() {
         const auth = getAuth();
         const currentUser = auth.currentUser;

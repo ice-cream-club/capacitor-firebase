@@ -44,6 +44,9 @@ class FirebaseAuthenticationWeb extends core.WebPlugin {
         const auth$1 = auth.getAuth();
         return auth.confirmPasswordReset(auth$1, options.oobCode, options.newPassword);
     }
+    async confirmVerificationCode(_options) {
+        throw new Error('Not implemented on web.');
+    }
     async deleteUser() {
         const auth$1 = auth.getAuth();
         const currentUser = auth$1.currentUser;

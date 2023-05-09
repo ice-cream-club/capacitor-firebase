@@ -1,12 +1,13 @@
 import { WebPlugin } from '@capacitor/core';
 import type { AuthCredential as FirebaseAuthCredential, AuthProvider as FirebaseAuthProvider, UserCredential as FirebaseUserCredential } from 'firebase/auth';
-import type { ApplyActionCodeOptions, ConfirmPasswordResetOptions, CreateUserWithEmailAndPasswordOptions, FirebaseAuthenticationPlugin, GetCurrentUserResult, GetIdTokenOptions, GetIdTokenResult, GetTenantIdResult, IsSignInWithEmailLinkOptions, IsSignInWithEmailLinkResult, LinkResult, LinkWithEmailAndPasswordOptions, LinkWithEmailLinkOptions, LinkWithOAuthOptions, LinkWithPhoneNumberOptions, SendPasswordResetEmailOptions, SendSignInLinkToEmailOptions, SetLanguageCodeOptions, SetTenantIdOptions, SignInResult, SignInWithCustomTokenOptions, SignInWithEmailAndPasswordOptions, SignInWithEmailLinkOptions, SignInWithOAuthOptions, SignInWithPhoneNumberOptions, UnlinkOptions, UnlinkResult, UpdateEmailOptions, UpdatePasswordOptions, UpdateProfileOptions, UseEmulatorOptions } from './definitions';
+import type { ApplyActionCodeOptions, ConfirmPasswordResetOptions, ConfirmVerificationCodeOptions, CreateUserWithEmailAndPasswordOptions, FirebaseAuthenticationPlugin, GetCurrentUserResult, GetIdTokenOptions, GetIdTokenResult, GetTenantIdResult, IsSignInWithEmailLinkOptions, IsSignInWithEmailLinkResult, LinkResult, LinkWithEmailAndPasswordOptions, LinkWithEmailLinkOptions, LinkWithOAuthOptions, LinkWithPhoneNumberOptions, SendPasswordResetEmailOptions, SendSignInLinkToEmailOptions, SetLanguageCodeOptions, SetTenantIdOptions, SignInResult, SignInWithCustomTokenOptions, SignInWithEmailAndPasswordOptions, SignInWithEmailLinkOptions, SignInWithOAuthOptions, SignInWithPhoneNumberOptions, UnlinkOptions, UnlinkResult, UpdateEmailOptions, UpdatePasswordOptions, UpdateProfileOptions, UseEmulatorOptions } from './definitions';
 export declare class FirebaseAuthenticationWeb extends WebPlugin implements FirebaseAuthenticationPlugin {
     static readonly ERROR_NO_USER_SIGNED_IN = "No user is signed in.";
     constructor();
     applyActionCode(options: ApplyActionCodeOptions): Promise<void>;
     createUserWithEmailAndPassword(options: CreateUserWithEmailAndPasswordOptions): Promise<SignInResult>;
     confirmPasswordReset(options: ConfirmPasswordResetOptions): Promise<void>;
+    confirmVerificationCode(_options: ConfirmVerificationCodeOptions): Promise<SignInResult>;
     deleteUser(): Promise<void>;
     getCurrentUser(): Promise<GetCurrentUserResult>;
     getIdToken(options?: GetIdTokenOptions): Promise<GetIdTokenResult>;
@@ -21,7 +22,7 @@ export declare class FirebaseAuthenticationWeb extends WebPlugin implements Fire
     linkWithGithub(options?: LinkWithOAuthOptions): Promise<LinkResult>;
     linkWithGoogle(options?: LinkWithOAuthOptions): Promise<LinkResult>;
     linkWithMicrosoft(options?: LinkWithOAuthOptions): Promise<LinkResult>;
-    linkWithPhoneNumber(_options: LinkWithPhoneNumberOptions): Promise<LinkResult>;
+    linkWithPhoneNumber(_options: LinkWithPhoneNumberOptions): Promise<void>;
     linkWithPlayGames(): Promise<LinkResult>;
     linkWithTwitter(options?: LinkWithOAuthOptions): Promise<LinkResult>;
     linkWithYahoo(options?: LinkWithOAuthOptions): Promise<LinkResult>;
@@ -40,7 +41,7 @@ export declare class FirebaseAuthenticationWeb extends WebPlugin implements Fire
     signInWithGithub(options?: SignInWithOAuthOptions): Promise<SignInResult>;
     signInWithGoogle(options?: SignInWithOAuthOptions): Promise<SignInResult>;
     signInWithMicrosoft(options?: SignInWithOAuthOptions): Promise<SignInResult>;
-    signInWithPhoneNumber(_options: SignInWithPhoneNumberOptions): Promise<SignInResult>;
+    signInWithPhoneNumber(_options: SignInWithPhoneNumberOptions): Promise<void>;
     signInWithPlayGames(): Promise<SignInResult>;
     signInWithGameCenter(): Promise<SignInResult>;
     signInWithTwitter(options?: SignInWithOAuthOptions): Promise<SignInResult>;
