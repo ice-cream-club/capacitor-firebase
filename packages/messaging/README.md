@@ -21,7 +21,7 @@ Add Firebase to your project if you haven't already ([Android](https://github.co
 
 This plugin will use the following project variables (defined in your app’s `variables.gradle` file):
 
-- `$firebaseMessagingVersion` version of `com.google.firebase:firebase-messaging` (default: `23.1.0`)
+- `$firebaseMessagingVersion` version of `com.google.firebase:firebase-messaging` (default: `23.1.2`)
 
 #### Push Notification Icon
 
@@ -257,6 +257,8 @@ checkPermissions() => Promise<PermissionStatus>
 
 Check permission to receive push notifications.
 
+On **Android**, this method only needs to be called on Android 13+.
+
 **Returns:** <code>Promise&lt;<a href="#permissionstatus">PermissionStatus</a>&gt;</code>
 
 **Since:** 0.2.2
@@ -271,6 +273,8 @@ requestPermissions() => Promise<PermissionStatus>
 ```
 
 Request permission to receive push notifications.
+
+On **Android**, this method only needs to be called on Android 13+.
 
 **Returns:** <code>Promise&lt;<a href="#permissionstatus">PermissionStatus</a>&gt;</code>
 

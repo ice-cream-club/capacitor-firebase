@@ -21,10 +21,10 @@ public class FirebaseAuthenticationPlugin: CAPPlugin {
     public let errorActionCodeSettingsMissing = "actionCodeSettings must be provided."
     public let errorPasswordMissing = "password must be provided."
     public let errorNewPasswordMissing = "newPassword must be provided."
-    public let errorPhoneNumberVerificationIdCodeMissing = "phoneNumber or verificationId and verificationCode must be provided."
+    public let errorPhoneNumberMissing = "phoneNumber must be provided."
+    public let errorVerificationIdMissing = "verificationId must be provided."
+    public let errorVerificationCodeMissing = "verificationCode must be provided."
     public let errorHostMissing = "host must be provided."
-    public let errorSignInFailed = "signIn failed."
-    public let errorCreateUserWithEmailAndPasswordFailed = "createUserWithEmailAndPassword failed."
     public let errorCustomTokenSkipNativeAuth =
         "signInWithCustomToken cannot be used in combination with skipNativeAuth."
     public let errorEmailLinkSignInSkipNativeAuth =
@@ -55,7 +55,8 @@ public class FirebaseAuthenticationPlugin: CAPPlugin {
         implementation?.applyActionCode(oobCode: oobCode, completion: { error in
             if let error = error {
                 CAPLog.print("[", self.tag, "] ", error)
-                call.reject(error.localizedDescription)
+                let code = FirebaseAuthenticationHelper.createErrorCode(error: error)
+                call.reject(error.localizedDescription, code)
                 return
             }
             call.resolve()
@@ -75,10 +76,35 @@ public class FirebaseAuthenticationPlugin: CAPPlugin {
         implementation?.confirmPasswordReset(oobCode: oobCode, newPassword: newPassword, completion: { error in
             if let error = error {
                 CAPLog.print("[", self.tag, "] ", error)
-                call.reject(error.localizedDescription)
+                let code = FirebaseAuthenticationHelper.createErrorCode(error: error)
+                call.reject(error.localizedDescription, code)
                 return
             }
             call.resolve()
+        })
+    }
+
+    @objc func confirmVerificationCode(_ call: CAPPluginCall) {
+        guard let verificationId = call.getString("verificationId") else {
+            call.reject(errorVerificationIdMissing)
+            return
+        }
+        guard let verificationCode = call.getString("verificationCode") else {
+            call.reject(errorVerificationCodeMissing)
+            return
+        }
+        let options = ConfirmVerificationCodeOptions(verificationId: verificationId, verificationCode: verificationCode)
+
+        implementation?.confirmVerificationCode(options, completion: { result, error in
+            if let error = error {
+                CAPLog.print("[", self.tag, "] ", error)
+                let code = FirebaseAuthenticationHelper.createErrorCode(error: error)
+                call.reject(error.localizedDescription, code)
+                return
+            }
+            if let result = result?.toJSObject() as? JSObject {
+                call.resolve(result)
+            }
         })
     }
 
@@ -95,7 +121,8 @@ public class FirebaseAuthenticationPlugin: CAPPlugin {
         implementation?.deleteUser(user: user, completion: { error in
             if let error = error {
                 CAPLog.print("[", self.tag, "] ", error)
-                call.reject(error.localizedDescription)
+                let code = FirebaseAuthenticationHelper.createErrorCode(error: error)
+                call.reject(error.localizedDescription, code)
                 return
             }
             call.resolve()
@@ -113,14 +140,16 @@ public class FirebaseAuthenticationPlugin: CAPPlugin {
     @objc func getIdToken(_ call: CAPPluginCall) {
         let forceRefresh = call.getBool("forceRefresh", false)
 
-        implementation?.getIdToken(forceRefresh, completion: { token, errorMessage in
-            if let errorMessage = errorMessage {
-                call.reject(errorMessage)
+        implementation?.getIdToken(forceRefresh, completion: { result, error in
+            if let error = error {
+                CAPLog.print("[", self.tag, "] ", error)
+                let code = FirebaseAuthenticationHelper.createErrorCode(error: error)
+                call.reject(error.localizedDescription, code)
                 return
             }
-            var result = JSObject()
-            result["token"] = token
-            call.resolve(result)
+            if let result = result {
+                call.resolve(result.toJSObject())
+            }
         })
     }
 
@@ -178,16 +207,14 @@ public class FirebaseAuthenticationPlugin: CAPPlugin {
     }
 
     @objc func linkWithPhoneNumber(_ call: CAPPluginCall) {
-        let phoneNumber = call.getString("phoneNumber")
-        let verificationId = call.getString("verificationId")
-        let verificationCode = call.getString("verificationCode")
-
-        if phoneNumber == nil && (verificationId == nil || verificationCode == nil) {
-            call.reject(errorPhoneNumberVerificationIdCodeMissing)
+        guard let phoneNumber = call.getString("phoneNumber") else {
+            call.reject(errorPhoneNumberMissing)
             return
         }
+        let options = LinkWithPhoneNumberOptions(phoneNumber: phoneNumber)
 
-        implementation?.linkWithPhoneNumber(call)
+        implementation?.linkWithPhoneNumber(options)
+        call.resolve()
     }
 
     @objc func linkWithPlayGames(_ call: CAPPluginCall) {
@@ -211,7 +238,8 @@ public class FirebaseAuthenticationPlugin: CAPPlugin {
         implementation?.reload(user: user, completion: { error in
             if let error = error {
                 CAPLog.print("[", self.tag, "] ", error)
-                call.reject(error.localizedDescription)
+                let code = FirebaseAuthenticationHelper.createErrorCode(error: error)
+                call.reject(error.localizedDescription, code)
                 return
             }
             call.resolve()
@@ -227,7 +255,8 @@ public class FirebaseAuthenticationPlugin: CAPPlugin {
         implementation?.sendEmailVerification(user: user, completion: { error in
             if let error = error {
                 CAPLog.print("[", self.tag, "] ", error)
-                call.reject(error.localizedDescription)
+                let code = FirebaseAuthenticationHelper.createErrorCode(error: error)
+                call.reject(error.localizedDescription, code)
                 return
             }
             call.resolve()
@@ -243,7 +272,8 @@ public class FirebaseAuthenticationPlugin: CAPPlugin {
         implementation?.sendPasswordResetEmail(email: email, completion: { error in
             if let error = error {
                 CAPLog.print("[", self.tag, "] ", error)
-                call.reject(error.localizedDescription)
+                let code = FirebaseAuthenticationHelper.createErrorCode(error: error)
+                call.reject(error.localizedDescription, code)
                 return
             }
             call.resolve()
@@ -292,7 +322,8 @@ public class FirebaseAuthenticationPlugin: CAPPlugin {
         implementation?.sendSignInLinkToEmail(email: email, actionCodeSettings: actionCodeSettings, completion: { error in
             if let error = error {
                 CAPLog.print("[", self.tag, "] ", error)
-                call.reject(error.localizedDescription)
+                let code = FirebaseAuthenticationHelper.createErrorCode(error: error)
+                call.reject(error.localizedDescription, code)
                 return
             }
             call.resolve()
@@ -357,16 +388,15 @@ public class FirebaseAuthenticationPlugin: CAPPlugin {
     }
 
     @objc func signInWithPhoneNumber(_ call: CAPPluginCall) {
-        let phoneNumber = call.getString("phoneNumber")
-        let verificationId = call.getString("verificationId")
-        let verificationCode = call.getString("verificationCode")
-
-        if phoneNumber == nil && (verificationId == nil || verificationCode == nil) {
-            call.reject(errorPhoneNumberVerificationIdCodeMissing)
+        let skipNativeAuth = call.getBool("skipNativeAuth", firebaseAuthenticationConfig().skipNativeAuth)
+        guard let phoneNumber = call.getString("phoneNumber") else {
+            call.reject(errorPhoneNumberMissing)
             return
         }
+        let options = SignInWithPhoneNumberOptions(skipNativeAuth: skipNativeAuth, phoneNumber: phoneNumber)
 
-        implementation?.signInWithPhoneNumber(call)
+        implementation?.signInWithPhoneNumber(options)
+        call.resolve()
     }
 
     @objc func signInWithPlayGames(_ call: CAPPluginCall) {
@@ -398,7 +428,8 @@ public class FirebaseAuthenticationPlugin: CAPPlugin {
         implementation?.unlink(user: user, providerId: providerId, completion: { user, error in
             if let error = error {
                 CAPLog.print("[", self.tag, "] ", error)
-                call.reject(error.localizedDescription)
+                let code = FirebaseAuthenticationHelper.createErrorCode(error: error)
+                call.reject(error.localizedDescription, code)
                 return
             }
             let userResult = FirebaseAuthenticationHelper.createUserResult(user)
@@ -421,7 +452,8 @@ public class FirebaseAuthenticationPlugin: CAPPlugin {
         implementation?.updateEmail(user: user, newEmail: newEmail, completion: { error in
             if let error = error {
                 CAPLog.print("[", self.tag, "] ", error)
-                call.reject(error.localizedDescription)
+                let code = FirebaseAuthenticationHelper.createErrorCode(error: error)
+                call.reject(error.localizedDescription, code)
                 return
             }
             call.resolve()
@@ -441,7 +473,8 @@ public class FirebaseAuthenticationPlugin: CAPPlugin {
         implementation?.updatePassword(user: user, newPassword: newPassword, completion: { error in
             if let error = error {
                 CAPLog.print("[", self.tag, "] ", error)
-                call.reject(error.localizedDescription)
+                let code = FirebaseAuthenticationHelper.createErrorCode(error: error)
+                call.reject(error.localizedDescription, code)
                 return
             }
             call.resolve()
@@ -460,7 +493,8 @@ public class FirebaseAuthenticationPlugin: CAPPlugin {
         implementation?.updateProfile(user: user, displayName: displayName, photoUrl: photoUrl, completion: { error in
             if let error = error {
                 CAPLog.print("[", self.tag, "] ", error)
-                call.reject(error.localizedDescription)
+                let code = FirebaseAuthenticationHelper.createErrorCode(error: error)
+                call.reject(error.localizedDescription, code)
                 return
             }
             call.resolve()
